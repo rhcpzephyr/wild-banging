@@ -1,21 +1,44 @@
 let isLeftReady = false;
 let isRightReady = false;
 let canShoot = false;
+let canKill = false;
+let timeoutId;
 
 const resetGame = () => {
   isLeftReady = false;
   isRightReady = false;
   canShoot = false;
+  canKill = false;
+  clearTimeout(timeoutId);
+};
+
+const startTimer = () => {
+  timeoutId = setTimeout(() => {
+    console.log("Shoot!!!");
+    canKill = true;
+    if (isLeftReady === false && isRightReady === false) {
+      alert("It's a draw! Reset game...");
+      resetGame();
+    }
+  }, 3_000);
 };
 
 const handleKeyDown = (event) => {
   if (canShoot) {
     if (event.code === "ShiftLeft") {
-      alert("Left wins!");
-      resetGame();
+      if (canKill && isLeftReady) {
+        alert("Left wins!");
+        resetGame();
+      } else {
+        isLeftReady = false;
+      }
     } else if (event.code === "ShiftRight") {
-      alert("Right wins!");
-      resetGame();
+      if (canKill && isRightReady) {
+        alert("Right wins!");
+        resetGame();
+      } else {
+        isRightReady = false;
+      }
     }
     return;
   }
@@ -27,8 +50,9 @@ const handleKeyDown = (event) => {
   }
 
   if (isLeftReady && isRightReady) {
-    console.log("Shoot your shot!");
+    console.log("Get ready...");
     canShoot = true;
+    startTimer();
   }
 };
 
