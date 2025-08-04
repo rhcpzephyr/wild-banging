@@ -13,6 +13,8 @@ const resetGame = () => {
 };
 
 const startTimer = () => {
+  const timerDelay = 3_000 + Math.random() * 7_000;
+
   timeoutId = setTimeout(() => {
     console.log("Shoot!!!");
     canKill = true;
@@ -20,7 +22,7 @@ const startTimer = () => {
       alert("It's a draw! Reset game...");
       resetGame();
     }
-  }, 3_000);
+  }, timerDelay);
 };
 
 const handleKeyDown = (event) => {
