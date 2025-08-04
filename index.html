@@ -7,6 +7,9 @@
     <style>
       :root {
         --color-main: #555;
+        --color-ready: green;
+        --color-winner: darkgoldenrod;
+        --color-dead: red;
       }
 
       * {
@@ -38,6 +41,18 @@
         height: 100px;
         width: 50px;
         background-color: var(--color-main);
+
+        &.ready {
+          background-color: var(--color-ready);
+        }
+
+        &.winner {
+          background-color: var(--color-winner);
+        }
+
+        &.dead {
+          background-color: var(--color-dead) !important;
+        }
       }
     </style>
   </head>
@@ -45,8 +60,8 @@
   <body>
     <h1>Press Ctrl to play</h1>
     <div class="container">
-      <div class="cowboy" id="cowboy1"></div>
-      <div class="cowboy" id="cowboy2"></div>
+      <div class="cowboy" id="cowboyLeft"></div>
+      <div class="cowboy" id="cowboyRight"></div>
 
       <script type="module" src="js/script.js"></script>
     </div>
