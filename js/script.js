@@ -14,7 +14,23 @@ const renderGame = () => {
   cowboyRight.classList.toggle("winner", isRightWinner);
   cowboyLeft.classList.toggle("dead", isRightWinner);
   cowboyRight.classList.toggle("dead", isLeftWinner);
-  // TODO: render text
+
+  let renderText;
+
+  if (isDraw) {
+    renderText = "Too early, both of you... Restart game! (Ctrl)";
+  } else if (isLeftWinner) {
+    renderText = "Left wins! Good job... Press Ctrl to play again!";
+  } else if (isRightWinner) {
+    renderText = "Right wins! Good job... Press Ctrl to play again!";
+  } else if (canKill) {
+    renderText = "BANG!";
+  } else if (canShoot) {
+    renderText = "Get ready to bang... (use Shift)";
+  } else {
+    renderText = "Who's the fastest? Press both Ctrl's and check!";
+  }
+  displayText.innerText = renderText;
 };
 
 const resetGame = () => {
