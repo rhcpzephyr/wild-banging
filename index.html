@@ -3,66 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <title>Wild Bang-Bang game</title>
-
-    <style>
-      :root {
-        --color-main: #555;
-        --color-ready: green;
-        --color-winner: darkgoldenrod;
-        --color-dead: red;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        justify-content: center;
-        gap: 20px;
-      }
-
-      h1 {
-        text-align: center;
-      }
-
-      .container {
-        display: flex;
-        width: 100%;
-        justify-content: space-around;
-        border-bottom: solid var(--color-main) 10px;
-        padding: 5px;
-      }
-
-      .cowboy {
-        height: 100px;
-        width: 50px;
-        background-color: var(--color-main);
-
-        &.ready {
-          background-color: var(--color-ready);
-        }
-
-        &.winner {
-          background-color: var(--color-winner);
-        }
-
-        &.dead {
-          background-color: var(--color-dead) !important;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="/style.css" />
   </head>
 
   <body>
-    <h1 id="displayText"></h1>
+    <h1 id="displayText" class="smokum-regular"></h1>
     <div class="container">
       <div class="cowboy" id="cowboyLeft"></div>
       <div class="cowboy" id="cowboyRight"></div>
-
       <script type="module" src="js/script.js"></script>
     </div>
   </body>

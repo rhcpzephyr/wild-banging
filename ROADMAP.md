@@ -3,14 +3,17 @@
 ## Implemented
 
 - [x] Basic game mechanics
+- [x] Graphics
 
 ## Planned
 
-- [ ] Graphics
 - [ ] Sound
 - [ ] Controls info
 - [ ] Text animation
 
 ## Future
 
+- [ ] Mobile version
 - [ ] Sound volume controls
+- [ ] Sound variety
+- [ ] Stackable trophies

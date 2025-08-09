@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Smokum&display=swap");
+
+:root {
+  --color-text: #fcb98e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("/img/background.jpg");
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 200px;
+  justify-content: center;
+  gap: 20px;
+}
+
+h1 {
+  text-align: center;
+  background-color: var(--color-text);
+
+  &.smokum-regular {
+    font-family: "Smokum", serif;
+    font-weight: 400;
+    font-size: max(7vh, 16px);
+  }
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  padding: 5px;
+}
+
+.cowboy {
+  height: 100px;
+  width: 100px;
+}
+
+#cowboyRight {
+  background-image: url(/img/cbRightnobg.png);
+
+  &.dead {
+    background-image: url(/img/cbRightnobg-dead.png) !important;
+  }
+  &.ready {
+    background-image: url(/img/cbRightnobg-ready.png);
+  }
+  &.winner {
+    background-image: url(/img/cbRightnobg-winner.png);
+  }
+}
+
+#cowboyLeft {
+  background-image: url(/img/cbLeftnobg.png);
+
+  &.dead {
+    background-image: url(/img/cbLeftnobg-dead.png) !important;
+  }
+  &.ready {
+    background-image: url(/img/cbLeftnobg-ready.png);
+  }
+  &.winner {
+    background-image: url(/img/cbLeftnobg-winner.png);
+  }
+}
