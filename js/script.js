@@ -1,3 +1,17 @@
+/** Left cowboy HTML element */
+const cowboyLeft = document.getElementById("cowboyLeft");
+/** Right cowboy HTML element */
+const cowboyRight = document.getElementById("cowboyRight");
+/** Main text HTML element */
+const displayText = document.getElementById("displayText");
+
+if (!(cowboyLeft instanceof HTMLDivElement))
+  throw new Error("#cowboyLeft not found or not a div");
+if (!(cowboyRight instanceof HTMLDivElement))
+  throw new Error("#cowboyRight not found or not a div");
+if (!(displayText instanceof HTMLHeadingElement))
+  throw new Error("#displayText not found or not a header");
+
 let isLeftReady;
 let isRightReady;
 let canShoot;
