@@ -9,7 +9,7 @@
 }
 
 body {
-  background-image: url("/img/background.jpg");
+  background-image: url("./img/background.jpg");
   background-size: cover;
   background-position: center;
   margin: 0;
@@ -45,29 +45,29 @@ h1 {
 }
 
 #cowboyRight {
-  background-image: url(/img/cbRightnobg.png);
+  background-image: url(./img/cbRightnobg.png);
 
   &.dead {
-    background-image: url(/img/cbRightnobg-dead.png) !important;
+    background-image: url(./img/cbRightnobg-dead.png) !important;
   }
   &.ready {
-    background-image: url(/img/cbRightnobg-ready.png);
+    background-image: url(./img/cbRightnobg-ready.png);
   }
   &.winner {
-    background-image: url(/img/cbRightnobg-winner.png);
+    background-image: url(./img/cbRightnobg-winner.png);
   }
 }
 
 #cowboyLeft {
-  background-image: url(/img/cbLeftnobg.png);
+  background-image: url(./img/cbLeftnobg.png);
 
   &.dead {
-    background-image: url(/img/cbLeftnobg-dead.png) !important;
+    background-image: url(./img/cbLeftnobg-dead.png) !important;
   }
   &.ready {
-    background-image: url(/img/cbLeftnobg-ready.png);
+    background-image: url(./img/cbLeftnobg-ready.png);
   }
   &.winner {
-    background-image: url(/img/cbLeftnobg-winner.png);
+    background-image: url(./img/cbLeftnobg-winner.png);
   }
 }
