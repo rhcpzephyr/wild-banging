@@ -7,6 +7,7 @@
 
 ## Planned
 
+- [ ] Fix image flickers
 - [ ] Sound
 - [ ] Controls info
 - [ ] Text animation
