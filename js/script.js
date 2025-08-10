@@ -12,15 +12,26 @@ if (!(cowboyRight instanceof HTMLDivElement))
 if (!(displayText instanceof HTMLHeadingElement))
   throw new Error("#displayText not found or not a header");
 
+/** @type {boolean} Whether the left cowboy is ready for a duel */
 let isLeftReady;
+/** @type {boolean} Whether the right cowboy is ready for a duel */
 let isRightReady;
+/** @type {boolean} Whether shooting is possible */
 let canShoot;
+/** @type {boolean} Whether killing is allowed (during the BANG phase) */
 let canKill;
+/** @type {number} Timeout ID for the shooting timer */
 let timeoutId;
+/** @type {boolean} Whether the left cowboy won */
 let isLeftWinner;
+/** @type {boolean} Whether the right cowboy won */
 let isRightWinner;
+/** @type {boolean} Whether the game ended in a draw */
 let isDraw;
 
+/**
+ * Updates the game UI based on current game state
+ */
 const renderGame = () => {
   cowboyLeft.classList.toggle("ready", isLeftReady);
   cowboyRight.classList.toggle("ready", isRightReady);
@@ -47,6 +58,9 @@ const renderGame = () => {
   displayText.innerText = renderText;
 };
 
+/**
+ * Resets the game to its initial state
+ */
 const resetGame = () => {
   isLeftReady = false;
   isRightReady = false;
@@ -59,23 +73,28 @@ const resetGame = () => {
   renderGame();
 };
 
-const startTimer = () => {
+/**
+ * Starts the shooting timer with a random delay from 3s to 10s
+ */
+const startShootingTimer = () => {
   const timerDelay = 3_000 + Math.random() * 7_000;
 
   timeoutId = setTimeout(() => {
-    console.log("Shoot!!!");
     canKill = true;
 
-    if (isLeftReady === false && isRightReady === false) {
+    if (!isLeftReady && !isRightReady) {
       isDraw = true;
       canShoot = false;
-      console.log("Draw :(");
     }
 
     renderGame();
   }, timerDelay);
 };
 
+/**
+ * Handles keydown events
+ * @param {KeyboardEvent} event - The keyboard event
+ */
 const handleKeyDown = (event) => {
   if (canShoot) {
     if (event.code === "ShiftLeft") {
@@ -113,14 +132,17 @@ const handleKeyDown = (event) => {
   }
 
   if (isLeftReady && isRightReady) {
-    console.log("Get ready...");
     canShoot = true;
-    startTimer();
+    startShootingTimer();
   }
 
   renderGame();
 };
 
+/**
+ * Handles keyup events
+ * @param {KeyboardEvent} event - The keyboard event
+ */
 const handleKeyUp = (event) => {
   if (canShoot) {
     return;
@@ -135,6 +157,11 @@ const handleKeyUp = (event) => {
   renderGame();
 };
 
-resetGame();
-document.addEventListener("keydown", handleKeyDown);
-document.addEventListener("keyup", handleKeyUp);
+/**
+ * Initializes the game by setting up event listeners and resetting the game state
+ */
+export const initGame = () => {
+  resetGame();
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("keyup", handleKeyUp);
+};

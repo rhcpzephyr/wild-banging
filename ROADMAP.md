@@ -10,11 +10,12 @@
 - [ ] Fix image flickers
 - [ ] Sound
 - [ ] Controls info
-- [ ] Text animation
 
 ## Future
 
 - [ ] Mobile version
+- [ ] Text animation
 - [ ] Sound volume controls
 - [ ] Sound variety
+- [ ] Reaction time render
 - [ ] Stackable trophies
