@@ -1,3 +1,5 @@
+import { imageList } from "./imageList.js";
+import { createImageLoader } from "./imageLoader.js";
 import { createAudioManager } from "./audio.js";
 import { soundMap } from "./soundMap.js";
 
@@ -15,6 +17,7 @@ if (!(cowboyRight instanceof HTMLDivElement))
 if (!(displayText instanceof HTMLHeadingElement))
   throw new Error("#displayText not found or not a header");
 
+const ImageLoader = createImageLoader();
 const AudioManager = createAudioManager();
 
 /** @type {boolean} Whether the left cowboy is ready for a duel */
@@ -184,6 +187,7 @@ const handleKeyUp = (event) => {
  * Initializes the game by loading media, setting up event listeners, and resetting the game state
  */
 export const initGame = async () => {
+  ImageLoader.loadImages(imageList);
   await AudioManager.loadSounds(soundMap);
 
   resetGame();

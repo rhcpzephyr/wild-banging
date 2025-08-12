@@ -8,8 +8,8 @@
 
 ## Planned
 
-- [ ] Fix: image flickers
 - [ ] Fix: background image optimization
+- [ ] Page icon
 
 ## Future
 
