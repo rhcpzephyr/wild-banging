@@ -143,7 +143,7 @@ const handleKeyDown = (event) => {
     if (isLeftWinner || isDraw) {
       resetGame();
     }
-    if (!isRightWinner) {
+    if (!isLeftReady && !isRightWinner) {
       isLeftReady = true;
       AudioController.playSound("reload");
     }
@@ -151,7 +151,7 @@ const handleKeyDown = (event) => {
     if (isRightWinner || isDraw) {
       resetGame();
     }
-    if (!isLeftWinner) {
+    if (!isRightReady && !isLeftWinner) {
       isRightReady = true;
       AudioController.playSound("reload");
     }
