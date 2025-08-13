@@ -8,8 +8,7 @@
 
 ## Planned
 
-- [ ] Fix: background image optimization
-- [ ] Page icon
+- [ ] README file
 
 ## Future
 
