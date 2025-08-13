@@ -1,3 +1,5 @@
+import { IMG_DIR } from "./image-const.js";
+
 /**
  * Creates an image loader with caching
  */
@@ -17,17 +19,19 @@ export const createImageLoader = () => {
     }
 
     const imagePromise = new Promise((resolve, reject) => {
+      const fullUrl = `${IMG_DIR}/${url}`;
+
       const img = new Image();
       img.decoding = "async";
       img.fetchPriority = "high";
 
       img.onload = () => resolve(img);
       img.onerror = (err) => {
-        console.warn(`Image load failed: ${url}`, err);
-        reject(new Error(`IMAGE_LOAD_FAILED: ${url}`));
+        console.warn(`Image load failed: ${fullUrl}`, err);
+        reject(new Error(`IMAGE_LOAD_FAILED: ${fullUrl}`));
       };
 
-      img.src = url;
+      img.src = fullUrl;
     });
 
     cache.set(url, imagePromise);

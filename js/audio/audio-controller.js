@@ -1,9 +1,9 @@
-import { soundMap } from "./soundMap.js";
+import { AUDIO_DIR, audioMap } from "./audio-const.js";
 
 /**
- * Creates and manages audio context and sounds
+ * Creates and controls audio context and sounds
  */
-export const createAudioManager = () => {
+export const createAudioController = () => {
   const audioContext = new AudioContext();
 
   /** Master gain node for volume control */
@@ -13,7 +13,7 @@ export const createAudioManager = () => {
 
   /**
    * Loaded audio buffers
-   * @type {Object<keyof soundMap, AudioBuffer | null>}
+   * @type {Object<keyof audioMap, AudioBuffer | null>}
    */
   const buffers = {};
 
@@ -30,7 +30,8 @@ export const createAudioManager = () => {
    */
   const loadAudioFile = async (url) => {
     try {
-      const response = await fetch(url);
+      const fullUrl = `${AUDIO_DIR}/${url}`;
+      const response = await fetch(fullUrl);
       const arrayBuffer = await response.arrayBuffer();
       return audioContext.decodeAudioData(arrayBuffer);
     } catch (error) {
@@ -41,7 +42,7 @@ export const createAudioManager = () => {
 
   /**
    * Loads game sounds
-   * @param {soundMap} soundFiles - Map of sound names to file paths
+   * @param {audioMap} soundFiles - Map of sound names to file paths
    * @returns {Promise<void>}
    */
   const loadSounds = async (soundFiles) => {
@@ -67,7 +68,7 @@ export const createAudioManager = () => {
 
   /**
    * Plays a loaded sound
-   * @param {keyof soundMap} soundName - Name of the sound to play
+   * @param {keyof audioMap} soundName - Name of the sound to play
    * @param {Object} [options] - Playback options
    * @param {number} [options.volume=1] - Volume (0 to 1)
    * @param {number} [options.playbackRate=1] - Playback speed

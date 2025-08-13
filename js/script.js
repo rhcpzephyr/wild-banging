@@ -1,7 +1,7 @@
-import { imageList } from "./imageList.js";
-import { createImageLoader } from "./imageLoader.js";
-import { createAudioManager } from "./audio.js";
-import { soundMap } from "./soundMap.js";
+import { createAudioController } from "./audio/audio-controller.js";
+import { audioMap } from "./audio/audio-const.js";
+import { createImageLoader } from "./image/image-loader.js";
+import { imageList } from "./image/image-const.js";
 
 /** Left cowboy HTML element */
 const cowboyLeft = document.getElementById("cowboyLeft");
@@ -18,7 +18,7 @@ if (!(displayText instanceof HTMLHeadingElement))
   throw new Error("#displayText not found or not a header");
 
 const ImageLoader = createImageLoader();
-const AudioManager = createAudioManager();
+const AudioController = createAudioController();
 
 /** @type {boolean} Whether the left cowboy is ready for a duel */
 let isLeftReady;
@@ -71,7 +71,7 @@ const renderGame = () => {
  */
 const resetGame = () => {
   clearTimeout(timeoutId);
-  AudioManager.stopAllSounds();
+  AudioController.stopAllSounds();
 
   isLeftReady = false;
   isRightReady = false;
@@ -89,12 +89,12 @@ const resetGame = () => {
  */
 const startShootingTimer = () => {
   const timerDelay = 3_000 + Math.random() * 7_000;
-  AudioManager.playSound("countdown");
+  AudioController.playSound("countdown");
 
   timeoutId = setTimeout(() => {
     canKill = true;
-    AudioManager.stopAllSounds();
-    AudioManager.playSound("bang");
+    AudioController.stopAllSounds();
+    AudioController.playSound("bang");
 
     if (!isLeftReady && !isRightReady) {
       isDraw = true;
@@ -115,10 +115,10 @@ const handleKeyDown = (event) => {
       if (canKill && isLeftReady) {
         isLeftWinner = true;
         canShoot = false;
-        AudioManager.playSound("gunshot");
-        AudioManager.playSound("win");
+        AudioController.playSound("gunshot");
+        AudioController.playSound("win");
       } else {
-        AudioManager.playSound("misfire");
+        AudioController.playSound("misfire");
       }
 
       isLeftReady = false;
@@ -126,10 +126,10 @@ const handleKeyDown = (event) => {
       if (canKill && isRightReady) {
         isRightWinner = true;
         canShoot = false;
-        AudioManager.playSound("gunshot");
-        AudioManager.playSound("win");
+        AudioController.playSound("gunshot");
+        AudioController.playSound("win");
       } else {
-        AudioManager.playSound("misfire");
+        AudioController.playSound("misfire");
       }
 
       isRightReady = false;
@@ -145,7 +145,7 @@ const handleKeyDown = (event) => {
     }
     if (!isRightWinner) {
       isLeftReady = true;
-      AudioManager.playSound("reload");
+      AudioController.playSound("reload");
     }
   } else if (event.code === "ControlRight") {
     if (isRightWinner || isDraw) {
@@ -153,7 +153,7 @@ const handleKeyDown = (event) => {
     }
     if (!isLeftWinner) {
       isRightReady = true;
-      AudioManager.playSound("reload");
+      AudioController.playSound("reload");
     }
   }
 
@@ -186,9 +186,9 @@ const handleKeyUp = (event) => {
 /**
  * Initializes the game by loading media, setting up event listeners, and resetting the game state
  */
-export const initGame = async () => {
+export const initGame = () => {
   ImageLoader.loadImages(imageList);
-  await AudioManager.loadSounds(soundMap);
+  AudioController.loadSounds(audioMap);
 
   resetGame();
   document.addEventListener("keydown", handleKeyDown);
