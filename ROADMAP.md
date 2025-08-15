@@ -2,20 +2,22 @@
 
 ## Implemented
 
+### v1.0
+
 - [x] Basic game mechanics
 - [x] Graphics
 - [x] Sound
 
 ## Planned
 
-- [ ] README file
-
-## Future
-
 - [ ] Mobile version
   - [ ] Layout (landscape/portrait)
   - [ ] Controls
   - [ ] Text
+
+## Future
+
+- [ ] Fix: audioContext.resume - robust solution
 - [ ] Controls info (desktop/mobile)
 - [ ] Reaction time render
 - [ ] Text animation
