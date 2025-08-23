@@ -2,16 +2,30 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="description" content="Wild Banging - a game of speed" />
+
     <title>Wild Bang-Bang game</title>
+
     <link rel="stylesheet" href="./style.css" />
     <link rel="icon" type="image/x-icon" href="./favicon.png" />
   </head>
 
   <body>
-    <h1 id="displayText" class="smokum-regular">Loading...</h1>
+    <h1 id="main-text" class="smokum-regular">Loading...</h1>
+
     <div class="container">
-      <div id="cowboyLeft" class="cowboy"></div>
-      <div id="cowboyRight" class="cowboy"></div>
+      <div id="cowboy-left" class="cowboy"></div>
+      <div id="cowboy-right" class="cowboy"></div>
+    </div>
+
+    <div class="mobile-controls">
+      <div class="mobile-controls-left"></div>
+      <div class="mobile-controls-right"></div>
     </div>
 
     <script type="module" src="./js/index.js"></script>

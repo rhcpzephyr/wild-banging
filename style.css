@@ -71,3 +71,22 @@ h1 {
     background-image: url(./img/cbLeftnobg-winner.png);
   }
 }
+
+.mobile-controls {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  position: absolute;
+
+  & .mobile-controls-left {
+    flex: 1 0 50%;
+    height: 100vh;
+    width: 50vw;
+  }
+
+  & .mobile-controls-right {
+    flex: 1 0 50%;
+    height: 100vh;
+    width: 50vw;
+  }
+}

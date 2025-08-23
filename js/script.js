@@ -3,19 +3,25 @@ import { audioMap } from "./audio/audio-const.js";
 import { createImageLoader } from "./image/image-loader.js";
 import { imageList } from "./image/image-const.js";
 
+const leftControlsEl = document.querySelector(".mobile-controls-left");
+const rightControlsEl = document.querySelector(".mobile-controls-right");
 /** Left cowboy HTML element */
-const cowboyLeft = document.getElementById("cowboyLeft");
+const cowboyLeftEl = document.getElementById("cowboy-left");
 /** Right cowboy HTML element */
-const cowboyRight = document.getElementById("cowboyRight");
+const cowboyRightEl = document.getElementById("cowboy-right");
 /** Main text HTML element */
-const displayText = document.getElementById("displayText");
+const displayTextEl = document.getElementById("main-text");
 
-if (!(cowboyLeft instanceof HTMLDivElement))
-  throw new Error("#cowboyLeft not found or not a div");
-if (!(cowboyRight instanceof HTMLDivElement))
-  throw new Error("#cowboyRight not found or not a div");
-if (!(displayText instanceof HTMLHeadingElement))
-  throw new Error("#displayText not found or not a header");
+if (!(leftControlsEl instanceof HTMLDivElement))
+  throw new Error("'.mobile-controls-left' not found or not a div");
+if (!(rightControlsEl instanceof HTMLDivElement))
+  throw new Error("'.mobile-controls-right' not found or not a div");
+if (!(cowboyLeftEl instanceof HTMLDivElement))
+  throw new Error("'#cowboyLeft' not found or not a div");
+if (!(cowboyRightEl instanceof HTMLDivElement))
+  throw new Error("'#cowboyRight' not found or not a div");
+if (!(displayTextEl instanceof HTMLHeadingElement))
+  throw new Error("'#displayText' not found or not a header");
 
 const ImageLoader = createImageLoader();
 const AudioController = createAudioController();
@@ -41,12 +47,12 @@ let isDraw;
  * Updates the game UI based on current game state
  */
 const renderGame = () => {
-  cowboyLeft.classList.toggle("ready", isLeftReady);
-  cowboyRight.classList.toggle("ready", isRightReady);
-  cowboyLeft.classList.toggle("winner", isLeftWinner);
-  cowboyRight.classList.toggle("winner", isRightWinner);
-  cowboyLeft.classList.toggle("dead", isRightWinner);
-  cowboyRight.classList.toggle("dead", isLeftWinner);
+  cowboyLeftEl.classList.toggle("ready", isLeftReady);
+  cowboyRightEl.classList.toggle("ready", isRightReady);
+  cowboyLeftEl.classList.toggle("winner", isLeftWinner);
+  cowboyRightEl.classList.toggle("winner", isRightWinner);
+  cowboyLeftEl.classList.toggle("dead", isRightWinner);
+  cowboyRightEl.classList.toggle("dead", isLeftWinner);
 
   let renderText;
 
@@ -63,7 +69,7 @@ const renderGame = () => {
   } else {
     renderText = "Who's the fastest? Press both Ctrl's and check!";
   }
-  displayText.innerText = renderText;
+  displayTextEl.innerText = renderText;
 };
 
 /**
@@ -105,41 +111,36 @@ const startShootingTimer = () => {
   }, timerDelay);
 };
 
-/**
- * Handles keydown events
- * @param {KeyboardEvent} event - The keyboard event
- */
-const handleKeyDown = (event) => {
-  if (canShoot) {
-    if (event.code === "ShiftLeft") {
-      if (canKill && isLeftReady) {
-        isLeftWinner = true;
-        canShoot = false;
-        AudioController.playSound("gunshot");
-        AudioController.playSound("win");
-      } else {
-        AudioController.playSound("misfire");
-      }
-
-      isLeftReady = false;
-    } else if (event.code === "ShiftRight") {
-      if (canKill && isRightReady) {
-        isRightWinner = true;
-        canShoot = false;
-        AudioController.playSound("gunshot");
-        AudioController.playSound("win");
-      } else {
-        AudioController.playSound("misfire");
-      }
-
-      isRightReady = false;
+const handleShoot = (isLeft) => {
+  if (isLeft) {
+    if (canKill && isLeftReady) {
+      isLeftWinner = true;
+      canShoot = false;
+      AudioController.playSound("gunshot");
+      AudioController.playSound("win");
+    } else {
+      AudioController.playSound("misfire");
     }
 
-    renderGame();
-    return;
+    isLeftReady = false;
+  } else {
+    if (canKill && isRightReady) {
+      isRightWinner = true;
+      canShoot = false;
+      AudioController.playSound("gunshot");
+      AudioController.playSound("win");
+    } else {
+      AudioController.playSound("misfire");
+    }
+
+    isRightReady = false;
   }
 
-  if (event.code === "ControlLeft") {
+  renderGame();
+};
+
+const handleReady = (isLeft) => {
+  if (isLeft) {
     if (isLeftWinner || isDraw) {
       resetGame();
     }
@@ -147,7 +148,7 @@ const handleKeyDown = (event) => {
       isLeftReady = true;
       AudioController.playSound("reload");
     }
-  } else if (event.code === "ControlRight") {
+  } else {
     if (isRightWinner || isDraw) {
       resetGame();
     }
@@ -156,13 +157,44 @@ const handleKeyDown = (event) => {
       AudioController.playSound("reload");
     }
   }
-
   if (isLeftReady && isRightReady) {
     canShoot = true;
     startShootingTimer();
   }
 
   renderGame();
+};
+
+const handleRelease = (isLeft) => {
+  if (isLeft) {
+    isLeftReady = false;
+  } else {
+    isRightReady = false;
+  }
+  renderGame();
+};
+
+// ---------- Event handlers ----------
+
+/**
+ * Handles keydown events
+ * @param {KeyboardEvent} event - The keyboard event
+ */
+const handleKeyDown = (event) => {
+  if (canShoot) {
+    if (event.code === "ShiftLeft") {
+      handleShoot(true);
+    } else if (event.code === "ShiftRight") {
+      handleShoot(false);
+    }
+    return;
+  }
+
+  if (event.code === "ControlLeft") {
+    handleReady(true);
+  } else if (event.code === "ControlRight") {
+    handleReady(false);
+  }
 };
 
 /**
@@ -175,13 +207,31 @@ const handleKeyUp = (event) => {
   }
 
   if (event.code === "ControlLeft") {
-    isLeftReady = false;
+    handleRelease(true);
   } else if (event.code === "ControlRight") {
-    isRightReady = false;
+    handleRelease(false);
   }
-
-  renderGame();
 };
+
+const handleTouch = (isLeft) => {
+  if (canShoot) {
+    handleShoot(isLeft);
+  } else {
+    handleReady(isLeft);
+  }
+};
+
+const handleTouchEnd = (isLeft) => {
+  if (!canShoot) {
+    handleRelease(isLeft);
+  }
+};
+
+const handleLeftTouch = () => handleTouch(true);
+const handleRightTouch = () => handleTouch(false);
+
+const handleLeftTouchEnd = () => handleTouchEnd(true);
+const handleRightTouchEnd = () => handleTouchEnd(false);
 
 /**
  * Initializes the game by loading media, setting up event listeners, and resetting the game state
@@ -191,6 +241,12 @@ export const initGame = () => {
   AudioController.loadSounds(audioMap);
 
   resetGame();
+
   document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keyup", handleKeyUp);
+
+  playerLeft.addEventListener("pointerdown", handleLeftTouch);
+  playerRight.addEventListener("pointerdown", handleRightTouch);
+  playerLeft.addEventListener("pointerup", handleLeftTouchEnd);
+  playerRight.addEventListener("pointerup", handleRightTouchEnd);
 };
