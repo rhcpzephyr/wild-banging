@@ -12,8 +12,8 @@
 
 - [ ] Mobile version
   - [ ] Layout (landscape/portrait)
-  - [ ] Controls
-  - [ ] Text
+  - [x] Controls
+  - [x] Text
 
 ## Future
 

@@ -44,7 +44,7 @@ h1 {
   width: 100px;
 }
 
-#cowboyRight {
+#cowboy-right {
   background-image: url(./img/cbRightnobg.png);
 
   &.dead {
@@ -58,7 +58,7 @@ h1 {
   }
 }
 
-#cowboyLeft {
+#cowboy-left {
   background-image: url(./img/cbLeftnobg.png);
 
   &.dead {

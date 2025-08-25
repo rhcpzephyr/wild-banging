@@ -3,6 +3,10 @@ import { audioMap } from "./audio/audio-const.js";
 import { createImageLoader } from "./image/image-loader.js";
 import { imageList } from "./image/image-const.js";
 
+const isMobile = /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(
+  navigator.userAgent
+);
+
 const leftControlsEl = document.querySelector(".mobile-controls-left");
 const rightControlsEl = document.querySelector(".mobile-controls-right");
 /** Left cowboy HTML element */
@@ -57,17 +61,27 @@ const renderGame = () => {
   let renderText;
 
   if (isDraw) {
-    renderText = "Too early, both of you... Restart game! (Ctrl)";
+    renderText = isMobile
+      ? "Too early, both of you... Tap to restart game!"
+      : "Too early, both of you... Restart game! (Ctrl)";
   } else if (isLeftWinner) {
-    renderText = "Left wins! Good job... Press Ctrl to play again!";
+    renderText = isMobile
+      ? "Left wins! Good for you... Tap to play again!"
+      : "Left wins! Good job... Press Ctrl to play again!";
   } else if (isRightWinner) {
-    renderText = "Right wins! Good job... Press Ctrl to play again!";
+    renderText = isMobile
+      ? "Right wins! Good for you... Tap to play again!"
+      : "Right wins! Good job... Press Ctrl to play again!";
   } else if (canKill) {
     renderText = "BANG!";
   } else if (canShoot) {
-    renderText = "Get ready to bang... (use Shift)";
+    renderText = isMobile
+      ? "Get ready to bang..."
+      : "Get ready to bang... (use Shift)";
   } else {
-    renderText = "Who's the fastest? Press both Ctrl's and check!";
+    renderText = isMobile
+      ? "Who's the fastest? Tap left and right sides of the screen..."
+      : "Who's the fastest? Press both Ctrl's to find out!";
   }
   displayTextEl.innerText = renderText;
 };
@@ -242,11 +256,15 @@ export const initGame = () => {
 
   resetGame();
 
-  document.addEventListener("keydown", handleKeyDown);
-  document.addEventListener("keyup", handleKeyUp);
-
-  playerLeft.addEventListener("pointerdown", handleLeftTouch);
-  playerRight.addEventListener("pointerdown", handleRightTouch);
-  playerLeft.addEventListener("pointerup", handleLeftTouchEnd);
-  playerRight.addEventListener("pointerup", handleRightTouchEnd);
+  if (isMobile) {
+    leftControlsEl.addEventListener("pointerdown", handleLeftTouch);
+    rightControlsEl.addEventListener("pointerdown", handleRightTouch);
+    leftControlsEl.addEventListener("pointercancel", handleLeftTouchEnd);
+    rightControlsEl.addEventListener("pointercancel", handleRightTouchEnd);
+    leftControlsEl.addEventListener("pointerup", handleLeftTouchEnd);
+    rightControlsEl.addEventListener("pointerup", handleRightTouchEnd);
+  } else {
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
+  }
 };
